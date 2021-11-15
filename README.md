@@ -43,8 +43,9 @@ Check health of system
 Get insight of incident with map and weather details
 
 
-Test with this url
+Test with these urls
 [http://127.0.0.1:5000/incidents/F01705150050](http://127.0.0.1:5000/incidents/F01705150050)
+[http://127.0.0.1:5000/incidents/F01705150090](http://127.0.0.1:5000/incidents/F01705150090)
 
 # Notes
 Red circle indicates the place where the incident happened.
@@ -53,3 +54,8 @@ If you click on the markers, you can see more details about the units.
 
 ![image](https://user-images.githubusercontent.com/46239206/141819270-e07906d2-adcc-48b8-a45e-bce4c0a9aba4.png)
 ![image](https://user-images.githubusercontent.com/46239206/141819400-0b5450df-8c7f-4fc8-a104-1336f5a8ac91.png)
+
+
+# Caveats
+The app uses API of weatherapi.com but it requires adding payment method to the account to get historic data.
+For this reason, the app uses current weather, so don't think the weather data is correct.
