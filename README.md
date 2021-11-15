@@ -33,17 +33,16 @@ Then you can test the api on browser
 
 # Summary
 If you run the project, you can access these two endpoints.
-- `/api/ht` `GET`
-
+- `GET`  `/api/ht` 
 Check health of system
 
 
-- `/api/incidents/{incident_number}` `GET`
-
+- `GET`  `/api/incidents/{incident_number}` 
 Get insights
 
 
-Test with these urls
+
+These are currently available.
 
 [http://127.0.0.1:5000/incidents/F01705150050](http://127.0.0.1:5000/incidents/F01705150050)
 
