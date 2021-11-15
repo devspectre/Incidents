@@ -28,18 +28,23 @@ body {
     width: 100%;
 }
 
+#map {
+    height: 90vh;
+    width: 100%;
+}
+
 .content {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     padding: 2rem;
 }
 
-#map {
-    height: 500px;
-    width: 100%;
+.details {
+    padding: 1rem;
 }
+
 </style>
 {% endblock %}
 {% block body %}
@@ -84,9 +89,9 @@ body {
 </script>
 <div id="root">
     <div class="content">
-        <h1>Fire Incidents Insight: {{description.incident_number}}</h1>
         <div id="map"></div>
-        <div id="details">
+        <div class="details">
+            <h1>Details</h1>
             <h3>Date: {{description.event_opened}}</h3>
             <h3>Address: {{address.address_line1}}, {{address.city}}, {{address.state}}</h3>
             <h3>Temperature(F): {{weather.current.temp_f}}</h3>
