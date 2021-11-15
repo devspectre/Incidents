@@ -1,10 +1,9 @@
-
 from datetime import datetime
 from json import load
 from json.decoder import JSONDecodeError
 import os
+import requests
 
-from meteostat import Point, Hourly
 from flask import (
     Flask,
     request,
@@ -12,6 +11,8 @@ from flask import (
 )
 
 app = Flask(__name__)
+WEATHER_API_BASE_URL = 'http://api.weatherapi.com/v1'
+WEATHER_API_KEY = '04fb3aa2bc6d4d0db3e151857211511'
 
 
 @app.route("/ht")
@@ -25,12 +26,6 @@ def incidents(incident_number):
     Endpoints for incidents
     """
     json_path = os.path.join("data", f'{incident_number}.json')
-    # just define it here to inform how the response looks like
-    response = {
-        "status": "success",
-        "data": {},
-        "weather": {}
-    }
     with open(json_path) as f:
         try:
             json_data = load(f)
@@ -42,20 +37,30 @@ def incidents(incident_number):
         start = datetime.fromisoformat(
             json_data['description']['event_opened'],
         ).replace(tzinfo=None)
-        end = datetime.fromisoformat(
-            json_data['description']['event_closed']
-        ).replace(tzinfo=None)
-        location = Point(
-            json_data['address']['latitude'],
-            json_data['address']['longitude']
+        lat = json_data['address']['latitude']
+        lon = json_data['address']['longitude']
+        start_date = start.strftime('%Y-%m-%d')
+
+        # in prod, the method should be history.json instead of current.json
+        # just using current.json as history.json requires payment
+        url = (
+            f"{WEATHER_API_BASE_URL}"
+            f"/current.json?key={WEATHER_API_KEY}"
+            f"&q={lat},{lon}"
+            f"&dt={start_date}"
         )
-        weather_data = Hourly(location, start, end)
-        weather_data.fetch()
-        print(weather_data)
+        response = requests.get(url)
+        weather_data = None
+        if response.status_code == 200:
+            weather_data = response.json()
+
         if request.method == "GET":
-            response["data"] = json_data
             return render_template(
                 'map.html',
-                data=json_data,
+                apparatus=json_data['apparatus'],
+                address=json_data['address'],
+                description=json_data['description'],
+                fire_department=json_data['fire_department'],
                 weather=weather_data,
+                version=json_data['version']
             )

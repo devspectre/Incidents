@@ -1,2 +1,2 @@
 Flask==2.0.2
-meteostat==1.5.10
+requests==2.25.1
