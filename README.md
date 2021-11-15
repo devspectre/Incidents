@@ -25,7 +25,7 @@ pip install -r requirements.txt
 flask run
 ```
 
-This will run api server on `http://127.0.0.1:5000/`(assuming you do not change port).
+This will run api server on `http://127.0.0.1:5000/`(assuming you do not change the port).
 
 Then you can test the api on browser
 
@@ -40,7 +40,7 @@ Check health of system
 
 - `/api/incidents/{incident_number}` `GET`
 
-Get insight of incident with map and weather details
+Get insights
 
 
 Test with these urls
