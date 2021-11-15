@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Fire Incidents Insight: {{data.description.incident_number}}{% endblock %}
+{% block title %}Fire Incidents Insight: {{description.incident_number}}{% endblock %}
 {% block extra_style %}
 <style>
 html {
@@ -45,8 +45,8 @@ body {
 {% block body %}
 <script type="text/javascript">
     $(document).ready(function () {
-        var lat = parseFloat('{{data.address.latitude}}')
-        var lon = parseFloat('{{data.address.longitude}}')
+        var lat = parseFloat('{{address.latitude}}')
+        var lon = parseFloat('{{address.longitude}}')
         var insightMap = L.map('map').setView([lat, lon], 18);
         L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
             attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -65,14 +65,14 @@ body {
         }).addTo(insightMap)
 
         var unitLocations = []
-        {% for unit in data.apparatus %}
+        {% for unit in apparatus %}
             var _lat = parseFloat('{{unit.unit_status.arrived.latitude}}')
             var _lon = parseFloat('{{unit.unit_status.arrived.longitude}}')
             var popupHtml = `
-            <h5>ID: {{unit.unit_id}}</h5>
-            <h5>Station: {{unit.station}}</h5>
-            <h5>Car: {{unit.car_id}}</h5>
-            <h5>Type: {{unit.unit_type}}</h5>
+            <h3>ID: {{unit.unit_id}}</h3>
+            <h3>Station: {{unit.station}}</h3>
+            <h3>Car: {{unit.car_id}}</h3>
+            <h3>Type: {{unit.unit_type}}</h3>
             `
             var marker = new L.marker([_lat, _lon]).addTo(insightMap)
             marker.bindPopup(popupHtml)
@@ -84,8 +84,21 @@ body {
 </script>
 <div id="root">
     <div class="content">
-        <h1>Fire Incidents Insight: {{data.description.incident_number}}</h1>
+        <h1>Fire Incidents Insight: {{description.incident_number}}</h1>
         <div id="map"></div>
+        <div id="details">
+            <h3>Date: {{description.event_opened}}</h3>
+            <h3>Address: {{address.address_line1}}, {{address.city}}, {{address.state}}</h3>
+            <h3>Temperature(F): {{weather.current.temp_f}}</h3>
+            <h3>Temperature(C): {{weather.current.temp_c}}</h3>
+            <h3>Condition: {{weather.current.condition.text}}</h3>
+            <h3>Wind(MPH): {{weather.current.wind_mph}}</h3>
+            <h3>Wind(KPH): {{weather.current.wind_kph}}</h3>
+            <h3>Wind Degree: {{weather.current.wind_degree}}</h3>
+            <h3>Wind Direction: {{weather.current.wind_dir}}</h3>
+            <h3>Humidity: {{weather.current.humidity}}</h3>
+            <h3>Cloud: {{weather.current.cloud}}</h3>
+        </div>
     </div>
 </div>
 {% endblock %}
