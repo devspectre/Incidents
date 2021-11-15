@@ -15,12 +15,13 @@ WEATHER_API_BASE_URL = 'http://api.weatherapi.com/v1'
 WEATHER_API_KEY = '04fb3aa2bc6d4d0db3e151857211511'
 
 
-@app.route("/api/ht")
+@app.route("/")
+@app.route("/ht")
 def health_check():
-    return "Healthy!"
+    return "Healthy! Please go to /incidents/{incident_number}"
 
 
-@app.route("/api/incidents/<string:incident_number>", methods=["GET"])
+@app.route("/incidents/<string:incident_number>", methods=["GET"])
 def incidents(incident_number):
     """
     Endpoints for incidents
