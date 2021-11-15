@@ -33,11 +33,11 @@ Then you can test the api on browser
 
 # Summary
 If you run the project, you can access these two endpoints.
-- `GET`  `/api/ht` 
+- `GET`  `/ht` 
 Check health of system
 
 
-- `GET`  `/api/incidents/{incident_number}` 
+- `GET`  `/incidents/{incident_number}` 
 Get insights
 
 
